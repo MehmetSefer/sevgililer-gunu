@@ -326,6 +326,28 @@
         opacity: 1;
       }
 
+      .couple-photo{
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+  opacity:0;
+  transform:translateY(15px);
+  transition:all .8s ease;
+}
+
+.couple-photo.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.couple-photo img{
+  width:85%;
+  max-width:360px;
+  border-radius:18px;
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
+}
+
+
       /* Small screens */
       @media (max-width: 380px) {
         .title {
@@ -364,6 +386,9 @@
 
         <div class="reveal" id="reveal">
           <p class="msg" id="msg"></p>
+          <div class="couple-photo" id="couplePhoto">
+  <img src="biz.jpg">
+</div>
 
           <div class="row">
             <button class="btn" id="btnConfetti">Kutla 🎉</button>
@@ -405,14 +430,15 @@
       const env = document.getElementById("env");
       const reveal = document.getElementById("reveal");
       const msgEl = document.getElementById("msg");
+      const couplePhoto = document.getElementById("couplePhoto");
       const hint = document.getElementById("hint");
 
       // Burayı kendine göre değiştir:
       const fullText = `Sevgilim,
 
-Bu Cumartesi 14 Şubat…
+Bugün 14 Şubat…
 Ve seninle ilk Sevgililer Günümüz.
-Yan yana olamasak da, kalbimin yanında olduğun yer hiç değişmiyor.
+Yan yana olamasak da, kalbim her zaman senin yanın da.
 
 Seni düşünmek bana “ev” gibi geliyor.
 Huzur gibi…
@@ -442,15 +468,20 @@ IŞIL ♡ SEFER
       let typingTimer = null;
 
       function typewriter(text, speed = 22) {
-        clearInterval(typingTimer);
-        msgEl.textContent = "";
-        let i = 0;
-        typingTimer = setInterval(() => {
-          msgEl.textContent += text[i] ?? "";
-          i++;
-          if (i >= text.length) clearInterval(typingTimer);
-        }, speed);
-      }
+  clearInterval(typingTimer);
+  couplePhoto.classList.remove("show");
+  msgEl.textContent = "";
+  let i = 0;
+  typingTimer = setInterval(() => {
+    msgEl.textContent += text[i] ?? "";
+    i++;
+    if (i >= text.length) {
+      clearInterval(typingTimer);
+      couplePhoto.classList.add("show");
+    }
+  }, speed);
+}
+
 
       let openedOnce = false;
 
@@ -465,9 +496,10 @@ IŞIL ♡ SEFER
             launchConfetti(1200);
           }
         } else {
-          hint.textContent = "Dokun → zarf açılsın → mesaj gelsin ✨";
+          hint.textContent = "Kalbimi Aç → Kalbin de hisset 💗";
           reveal.classList.remove("show");
           clearInterval(typingTimer);
+          couplePhoto.classList.remove("show");
         }
       });
 
@@ -562,3 +594,4 @@ IŞIL ♡ SEFER
     </script>
   </body>
 </html>
+
